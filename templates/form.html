@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ action }}</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.amount.label }}<br>{{ form.amount() }}<br>
+    {{ form.date.label }} (YYYY-MM-DD)<br>{{ form.date() }}<br>
+    {{ form.payer.label }}<br>{{ form.payer() }}<br>
+    {{ form.payee.label }}<br>{{ form.payee() }}<br>
+    {{ form.purpose.label }}<br>{{ form.purpose(size=60) }}<br><br>
+    {{ form.submit() }}
+  </form>
+{% endblock %}

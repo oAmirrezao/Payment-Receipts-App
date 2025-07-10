@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Your Receipts</h2>
+  <form method="POST">
+    <input type="text" name="search" placeholder="Search payer/payee...">
+    <button type="submit">Search</button>
+  </form>
+
+  {% if receipts %}
+    <table>
+      <tr>
+        <th>ID</th><th>Date</th><th>Amount</th>
+        <th>Payer</th><th>Payee</th><th>Purpose</th><th>Actions</th>
+      </tr>
+      {% for r in receipts %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.date }}</td>
+        <td>${{ r.amount }}</td>
+        <td>{{ r.payer }}</td>
+        <td>{{ r.payee }}</td>
+        <td>{{ r.purpose }}</td>
+        <td>
+          <a href="{{ url_for('download_receipt', rid=r.id) }}">PDF</a> |
+          <a href="{{ url_for('edit_receipt', rid=r.id) }}">Edit</a> |
+          <form style="display:inline" method="POST"
+                action="{{ url_for('delete_receipt', rid=r.id) }}">
+            <button onclick="return confirm('Delete?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No receipts found.</p>
+  {% endif %}
+{% endblock %}
